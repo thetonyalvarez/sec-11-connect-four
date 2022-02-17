@@ -20,7 +20,7 @@ const makeBoard = () => {
 	for (let row = 0; row < HEIGHT; row++) {
 		board[row] = new Array(row);
 		for (let cell = 0; cell < WIDTH; cell++) {
-			board[row][cell] = "empty";
+			board[row][cell] = cell;
 		}
 	}
 	return board;
@@ -59,13 +59,15 @@ const makeHtmlBoard = () => {
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 
 const findSpotForCol = (x) => {
-	for (let y = HEIGHT; y >= 0; y--) {
-		if (board[x][y].length > 0 && board[x][y] !== "empty") {
-			return null;
-		} else if (board[x][y] == "empty") {
-			return board[x][y];
-		} else if (err) {
-			return err;
+	const htmlBoard = document.getElementById("board");
+
+	for (let y = HEIGHT - 1; y > 0; y--) {
+		if (htmlBoard.rows[y].children[x].classList.contains("piece")) {
+			// console.log("findSpotForCol condition 2", y, x);
+			return;
+		} else if (htmlBoard.rows[y].children[x].className === "") {
+			// console.log("findSpotForCol condition 1", y, x);
+			return y;
 		}
 	}
 };
@@ -76,15 +78,21 @@ const placeInTable = (y, x) => {
 	// make a div and insert into correct table cell
 	const piece = document.createElement("div");
 	const cell = document.getElementById(y + "-" + x);
-	piece.className = "filled";
+	console.dir(piece);
 	cell.appendChild(piece);
+	piece.parentNode.className = "piece";
+	if ((currPlayer = 1)) {
+		piece.parentNode.classList.add("p1");
+	} else if ((currPlayer = 2)) {
+		piece.parentNode.classList.add("p2");
+	}
 };
 
 /** endGame: announce game end */
 
 const endGame = (msg) => {
 	// pop up alert message
-	alert(msg);
+	// alert(msg);
 };
 
 /** handleClick: handle click of column top to play piece */
@@ -92,11 +100,10 @@ const endGame = (msg) => {
 const handleClick = (e) => {
 	// get x from ID of clicked cell
 	var x = +e.target.id;
-	console.log(x);
 
 	// get next spot in column (if none, ignore click)
 	let y = findSpotForCol(x);
-	if (y === "empty") {
+	if (y === null) {
 		return;
 	}
 
@@ -117,7 +124,7 @@ const handleClick = (e) => {
 			if (x === "empty") {
 				return;
 			} else {
-				alert("It's a tie!");
+				// alert("It's a tie!");
 			}
 		}
 	}
