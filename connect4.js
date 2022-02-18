@@ -50,6 +50,10 @@ const makeHtmlBoard = () => {
 		}
 		htmlBoard.appendChild(row);
 	}
+
+	document.getElementById(`player-info__details--p1`).style.backgroundColor = 'red'
+	document.getElementById('player-callout').innerText = `Player ${currPlayer}...`
+	document.getElementById('fight').style.color = 'red'
 };
 
 /** findSpotForCol: given column x, return top empty y (null if filled) */
@@ -70,7 +74,7 @@ const placeInTable = (y, x) => {
 	const piece = document.createElement("div");
 	piece.classList.add("piece");
 	piece.classList.add(`p${currPlayer}`);
-	// piece.style.top = -50 * (y + 2);
+	piece.style.top = -50 * (y + 2);
 
 	const cell = document.getElementById(`${y}-${x}`);
 	cell.appendChild(piece);
@@ -111,7 +115,18 @@ const handleClick = (e) => {
 	}
 
 	// switch players
+	
 	currPlayer = currPlayer === 1 ? 2 : 1;
+	notCurrPlayer = currPlayer === 1 ? 2 : 1;
+	
+	activePlayer = document.getElementById(`player-info__details--p${currPlayer}`);
+	activePlayer.style.backgroundColor = currPlayer === 1 ? 'red' : 'green'
+	inactivePlayer = document.getElementById(`player-info__details--p${notCurrPlayer}`);
+	inactivePlayer.style.backgroundColor = ''
+
+	document.getElementById('player-callout').innerText = `Player ${currPlayer}...`
+	document.getElementById('fight').style.color = currPlayer === 1 ? 'red' : 'green'
+
 };
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */

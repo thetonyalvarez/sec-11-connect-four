@@ -1,33 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Kameron:wght@700&display=swap');
+
+@font-face {
+  font-family: 'street-fighter';
+  src: url('assets/single_fighter-webfont.eot') format('embedded-opentype');
+  src: url('assets/single_fighter-webfont.otf') format ('opentype');
+  src: url('assets/single_fighter-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+:root {
+  --p1-color: red;
+  --p2-color: green;
+  --p1-img: url("img/player1.png");
+  --p2-img: url("img/player2.png");
+}
+
+html {
+	font-size: 1vw;
+	font-size: 16px;
+}
+
+h1, h2 {
+  font-family: 'street-fighter', sans-serif;
+}
+
+h1 {
+  font-size: 6rem !important;
+  color: red;
+  /* stroke-width:2px; */
+  -webkit-text-stroke-color:rgb(185, 0, 0);
+  -webkit-text-stroke-width: 1px;
+}
+
+h2 {
+  font-size: 4rem !important;
+
+}
+
+section, .section {
+  /* width: 48rem; */
+  width:600px;
+  max-width:600px;
+  margin:auto;
+}
+
 /* game board table */
 
+
+
 #board td {
-  width: 50px;
-  height: 50px;
-  border: solid 1px #666;
+	width: 85px;
+	height: 85px;
+  border-width: 5px;
+  border-style: ridge;
+  border-color: #e0e0e0;
+  position:relative;
 }
 
 /* pieces are div within game table cells: draw as colored circles */
 
 .piece {
-  margin: 5px;
-  width: 80%;
-  height: 80%;
-  border-radius: 100%;
+  margin: 5px auto;
+	width: 90%;
+	height: 90%;
+	border-radius: 100%;
+  background-size: cover;
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  -webkit-animation: Click_Effect 0.3s ease-out;
+          animation: Click_Effect 0.3s ease-out;
+}
+
+@-webkit-keyframes Click_Effect {
+  0% {
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+    opacity: 0;
+  }
+  75% {
+
+    opacity: 0.5;
+  }
+  100% {
+    -webkit-transform: translateY(0%);
+            transform: translateY(0%);
+    opacity: 1;
+  }
+}
+@keyframes Click_Effect {
+  0% {
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+    opacity: 0;
+  }
+  75% {
+
+    opacity: 0.5;
+  }
+  100% {
+    -webkit-transform: translateY(0%);
+            transform: translateY(0%);
+    opacity: 1;
+  }
 }
 
 .p1 {
-  background-color: red;
+	background-image: var(--p1-img);
+	background-color: var(--p1-color);
 }
 .p2 {
-  background-color: blue;
+  background-image: var(--p2-img);
+	background-color: var(--p2-color);
 }
 
 /* column-top is table row of clickable areas for each column */
 
 #column-top td {
-  border: dashed 1px lightgray;
+	border: dashed 1px lightgray;
 }
 
 #column-top td:hover {
-  background-color: gold;
+	background-color: gold;
+}
+
+/* Section: Player Info */
+#player-info-section {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+  flex-wrap: nowrap;
+  
+}
+
+
+.player-info__details {
+  display:flex;
+  justify-content: space-between;
+  width:150px;
+  padding:20px;
+}
+
+.player-info__details img {
+  width:100%;
+}
+
+/* Player health section */
+#player-health-section {
+  height:20px;
+  display:flex;
+  align-content: center;
+  justify-content: space-between;
+  position:relative;
+}
+
+.player-health__bar {
+  background-color:red;
+  height:20px;
+  width:100%;
+  margin-top:5px;
+
+}
+
+#player-health__ko span {
+  font-family: 'Kameron', serif;
+  text-transform: uppercase;
+  color:white;
+  font-size:20px;
+  -webkit-text-stroke-color:black;;
+  -webkit-text-stroke-width:1px;
+  position:absolute;
+  /* border-width: 3px; */
+  /* border-style: ridge; */
+  /* border-color: #e0e0e0; */
+}
+
+.player-health__bar:first-child {
+  border-radius: 0 0 0 5px;
+  border-width: 2px;
+  border-style: groove;
+  border-color: #e0e0e0;
+}
+
+.player-health__bar:last-child {
+  border-radius: 0 0 5px 0;
+  border-width: 2px;
+  border-style: groove;
+  border-color: #e0e0e0;
+}
+
+
+/* Tablet */
+@media (max-width:767px) {
+  html {
+    font-size: 16px;
+  }
+  h1 {
+    font-size: 3rem !important;
+  }
+  section, .section {
+    width: 28rem;
+    max-width:100%;
+  }
+  #board td {
+    width: 4rem;
+    height: 4rem;
+  }
+  .player-info__details {
+    width:100px;
+  }
+}
+
+/* Phone */
+@media (max-width:414px) {
+  h2 {
+    font-size: 1rem !important;
+  }
+  h4 {
+    font-size:1rem !important
+  }
+  section, .section {
+    width: 98vw;
+    max-width:100%;
+  }
+  #board td {
+    width: 12vw;
+    height: 12vw;
+  }
+  .player-info__details {
+    width:100px;
+  }
 }
